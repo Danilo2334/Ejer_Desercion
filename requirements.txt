@@ -1,0 +1,6 @@
+requests
+pandas
+pyspark
+numpy
+scikit-learn
+xgboost

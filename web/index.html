@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Deserción Universitaria | Portal</title>
+    <meta
+      name="description"
+      content="Bienvenida y acceso a los 4 dashboards de Deserción Universitaria en Power BI."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container utility-bar">
+        <div class="utility-left">
+          <span class="pill">
+            <strong data-i18n="home.title">Deserción Universitaria</strong>
+          </span>
+          <span class="pill muted" data-i18n="home.subtitle">
+            Portal de análisis y dashboards (Power BI)
+          </span>
+        </div>
+        <div class="utility-right">
+          <div class="control">
+            <label class="sr-only" for="lang" data-i18n="ui.lang">Idioma</label>
+            <select id="lang" data-lang-select aria-label="Idioma">
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+            </select>
+          </div>
+          <button class="btn" type="button" data-theme-toggle aria-pressed="true">
+            Oscuro
+          </button>
+        </div>
+      </div>
+
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">DU</div>
+          <div class="brand-text">
+            <div class="brand-title" data-i18n="home.welcomeTitle">Bienvenido(a)</div>
+            <div class="brand-subtitle" data-i18n="home.welcomeBody">
+              Explora métricas, tendencias y hallazgos sobre deserción académica.
+            </div>
+          </div>
+        </div>
+
+        <nav class="top-nav" aria-label="Navegación principal">
+          <a class="nav-link is-active" href="index.html" data-i18n="nav.home">Inicio</a>
+          <a class="nav-link" href="dashboard-1.html">Resumen Ejecutivo</a>
+          <a class="nav-link" href="dashboard-2.html">Análisis Detallado</a>
+          <a class="nav-link" href="dashboard-3.html">Análisis Estratégico</a>
+          <a class="nav-link" href="dashboard-4.html">Modelo Predictivo</a>
+        </nav>
+      </div>
+
+      <div class="container" style="padding: 0 18px 14px">
+        <div class="search" role="search" aria-label="Buscar (local)">
+          <span aria-hidden="true">⌕</span>
+          <input
+            type="search"
+            id="q"
+            data-i18n-placeholder="ui.search"
+            placeholder="Buscar..."
+            aria-label="Buscar"
+            data-card-search
+          />
+        </div>
+      </div>
+    </header>
+
+    <main class="container" data-load-summary>
+      <div
+        data-summary-scope="desercion"
+        data-csv="../data_lake/processed/dataset_desercion_clean.csv"
+        data-error-target="[data-summary-error='desercion']"
+      ></div>
+      <div
+        data-summary-scope="tasas"
+        data-csv="../data_lake/processed/dataset_tasas_clean.csv"
+        data-error-target="[data-summary-error='tasas']"
+      ></div>
+      <div
+        data-summary-scope="modelo"
+        data-csv="../data_lake/processed/modelo_tasas.csv"
+        data-error-target="[data-summary-error='modelo']"
+      ></div>
+      <section class="hero">
+        <div class="hero-banner">
+          <div class="hero-content">
+            <div class="hero-copy">
+              <h1 data-i18n="home.title">Deserción Universitaria</h1>
+              <p data-i18n="home.welcomeBody">
+                Explora métricas, tendencias y hallazgos sobre deserción académica para apoyar
+                decisiones y acciones de bienestar estudiantil.
+              </p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="dashboard-1.html" data-i18n="home.cta.dashboards"
+                  >Ver dashboards</a
+                >
+                <a class="btn btn-ghost" href="dashboard-4.html" data-i18n="home.cta.model"
+                  >Modelo predictivo</a
+                >
+              </div>
+            </div>
+            <div class="hero-panel">
+              <div class="hero-panel-title" data-i18n="home.quick">Acceso rápido</div>
+              <p class="muted" data-i18n="home.quickBody">
+                Selecciona uno de los dashboards para abrirlo en una vista con información y
+                contexto.
+              </p>
+              <p class="muted" style="margin: 10px 0 0">
+                <span data-i18n="kpi.updated">Fuente</span>:
+                <strong data-i18n="kpi.updated.value">CSV institucional</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title" data-i18n="section.datasets.title">Resumen de datasets</h2>
+        </div>
+
+        <div class="dataset-grid" aria-label="Resumen de datasets">
+          <article class="dataset-card">
+            <div class="dataset-head">
+              <div class="dataset-title" data-i18n="section.desercion">Deserción (Clean)</div>
+            </div>
+            <div class="dataset-stats">
+              <div class="stat">
+                <div class="stat-value" data-kpi="desercion.records">—</div>
+                <div class="stat-label" data-i18n="kpi.records">Registros en el dataset</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="desercion.faculties">—</div>
+                <div class="stat-label" data-i18n="label.faculties">Facultades</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="desercion.programs">—</div>
+                <div class="stat-label" data-i18n="label.programs">Programas</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="desercion.topFaculty">—</div>
+                <div class="stat-label" data-i18n="kpi.topFaculty">Facultad con más casos</div>
+              </div>
+            </div>
+            <p class="muted" style="margin: 10px 2px 0" data-summary-error="desercion"></p>
+          </article>
+
+          <article class="dataset-card">
+            <div class="dataset-head">
+              <div class="dataset-title" data-i18n="section.tasas">Tasas (Clean)</div>
+            </div>
+            <div class="dataset-stats">
+              <div class="stat">
+                <div class="stat-value" data-kpi="tasas.records">—</div>
+                <div class="stat-label" data-i18n="kpi.records">Registros en el dataset</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="tasas.ies">—</div>
+                <div class="stat-label" data-i18n="label.ies">IES</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="tasas.yearRange">—</div>
+                <div class="stat-label" data-i18n="label.yearRange">Rango de años</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="tasas.avgRate">—</div>
+                <div class="stat-label" data-i18n="label.avgRate">Tasa promedio</div>
+              </div>
+            </div>
+            <p class="muted" style="margin: 10px 2px 0" data-summary-error="tasas"></p>
+          </article>
+
+          <article class="dataset-card">
+            <div class="dataset-head">
+              <div class="dataset-title" data-i18n="section.modelo">Modelo (Tasas)</div>
+            </div>
+            <div class="dataset-stats">
+              <div class="stat">
+                <div class="stat-value" data-kpi="modelo.records">—</div>
+                <div class="stat-label" data-i18n="label.modelRecords">Registros del modelo</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="modelo.yearRange">—</div>
+                <div class="stat-label" data-i18n="label.yearRange">Rango de años</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="modelo.mae">—</div>
+                <div class="stat-label" data-i18n="label.mae">MAE (aprox.)</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" data-kpi="modelo.rmse">—</div>
+                <div class="stat-label" data-i18n="label.rmse">RMSE (aprox.)</div>
+              </div>
+            </div>
+            <p class="muted" style="margin: 10px 2px 0" data-summary-error="modelo"></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="section-title" data-i18n="cards.section">Dashboards</h2>
+          <p class="section-subtitle muted" data-i18n="section.dashboards.subtitle">
+            Abre cada vista con el reporte y su contexto al lado.
+          </p>
+        </div>
+
+        <section class="cards" aria-label="Dashboards">
+        <a class="card" href="dashboard-1.html" data-card>
+          <div class="card-kicker">Dashboard 1</div>
+          <div class="card-title" data-i18n="card.1.title">Resumen Ejecutivo</div>
+          <div class="card-desc">
+            <span data-i18n="card.1.desc">Indicadores clave y filtros principales.</span>
+          </div>
+        </a>
+        <a class="card" href="dashboard-2.html" data-card>
+          <div class="card-kicker">Dashboard 2</div>
+          <div class="card-title" data-i18n="card.2.title">Análisis Detallado</div>
+          <div class="card-desc">
+            <span data-i18n="card.2.desc">Tendencias y comportamiento en el tiempo.</span>
+          </div>
+        </a>
+        <a class="card" href="dashboard-3.html" data-card>
+          <div class="card-kicker">Dashboard 3</div>
+          <div class="card-title" data-i18n="card.3.title">Análisis Estratégico</div>
+          <div class="card-desc">
+            <span data-i18n="card.3.desc">Grupos afectados e insights accionables.</span>
+          </div>
+        </a>
+        <a class="card" href="dashboard-4.html" data-card>
+          <div class="card-kicker">Dashboard 4</div>
+          <div class="card-title" data-i18n="card.4.title">Modelo Predictivo</div>
+          <div class="card-desc">
+            <span data-i18n="card.4.desc">Evaluación del modelo y métricas.</span>
+          </div>
+        </a>
+        </section>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-inner">
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

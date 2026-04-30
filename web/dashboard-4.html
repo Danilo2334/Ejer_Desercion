@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard 4 | Modelo Predictivo</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container utility-bar">
+        <div class="utility-left">
+          <span class="pill">
+            <strong data-i18n="home.title">Deserción Universitaria</strong>
+          </span>
+          <span class="pill muted" data-i18n="home.subtitle">
+            Portal de análisis y dashboards (Power BI)
+          </span>
+        </div>
+        <div class="utility-right">
+          <div class="control">
+            <label class="sr-only" for="lang" data-i18n="ui.lang">Idioma</label>
+            <select id="lang" data-lang-select aria-label="Idioma">
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+            </select>
+          </div>
+          <button class="btn" type="button" data-theme-toggle aria-pressed="true">
+            Oscuro
+          </button>
+        </div>
+      </div>
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">DU</div>
+          <div class="brand-text">
+            <div class="brand-title">Deserción Universitaria</div>
+            <div class="brand-subtitle">Dashboards Power BI</div>
+          </div>
+        </div>
+        <nav class="top-nav" aria-label="Navegación principal">
+          <a class="nav-link" href="index.html" data-i18n="nav.home">Inicio</a>
+          <a class="nav-link" href="dashboard-1.html">Resumen Ejecutivo</a>
+          <a class="nav-link" href="dashboard-2.html">Análisis Detallado</a>
+          <a class="nav-link" href="dashboard-3.html">Análisis Estratégico</a>
+          <a class="nav-link is-active" href="dashboard-4.html">Modelo Predictivo</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" data-load-summary>
+      <div
+        data-summary-scope="tasas"
+        data-csv="../data_lake/processed/dataset_tasas_clean.csv"
+        data-error-target="[data-summary-error='tasas']"
+      ></div>
+      <div
+        data-summary-scope="modelo"
+        data-csv="../data_lake/processed/modelo_tasas.csv"
+        data-error-target="[data-summary-error='modelo']"
+      ></div>
+      <section class="page-head">
+        <h1 data-i18n="dash.4.title">Dashboard 4: Modelo Predictivo</h1>
+        <p class="muted" data-i18n="dash.4.subtitle">
+          Evaluación del modelo, métricas y comparación real vs predicho.
+        </p>
+      </section>
+
+      <section class="dash-layout" aria-label="Dashboard y contexto">
+        <div class="dash-main">
+          <section class="embed">
+            <iframe
+              title="Power BI - Dashboard 4"
+              src="https://app.powerbi.com/view?r=eyJrIjoiZDI3NDA2ZmUtYTBmZi00NGIwLWJhYjMtZWRlZjFjMTJjMTBiIiwidCI6IjhkMzY4MzZlLTZiNzUtNGRlNi1iYWI5LTVmNGIxNzc1NDI3ZiIsImMiOjR9&amp;pageName=c68b1f27e8602200c25c&zoom=60"
+              width="100%"
+              height="780"
+              style="border: none"
+              allowfullscreen="true"
+            ></iframe>
+          </section>
+        </div>
+
+        <aside class="dash-sidebar" aria-label="Información del dashboard">
+          <div class="side-title" data-i18n="dash.sidebar.title">Información</div>
+
+          <div class="side-block">
+            <h3 data-i18n="dash.sidebar.about">Sobre este dashboard</h3>
+            <p data-i18n="dash.4.about">
+              Revisa el desempeño del modelo predictivo y la relación entre valores reales y
+              predichos.
+            </p>
+          </div>
+
+          <div class="side-block">
+            <h3 data-i18n="dash.sidebar.key">Claves</h3>
+            <p class="muted" style="margin-top: 0">
+              <span data-i18n="dash.4.key.1">Métricas de desempeño (por ejemplo MAE/R²).</span><br />
+              <span data-i18n="dash.4.key.2"
+                >Comparación real vs predicho y análisis de errores.</span
+              >
+            </p>
+          </div>
+
+          <div class="side-block">
+            <h3 data-i18n="dash.sidebar.dataset">Dataset</h3>
+            <p data-i18n="dash.sidebar.dataset.body">
+              Métricas calculadas a partir del archivo CSV local del proyecto (agregadas).
+            </p>
+            <div class="side-kpis">
+              <div class="mini-kpi">
+                <div class="value" data-kpi="modelo.records">—</div>
+                <div class="label" data-i18n="label.modelRecords">Registros del modelo</div>
+              </div>
+              <div class="mini-kpi">
+                <div class="value" data-kpi="modelo.yearRange">—</div>
+                <div class="label" data-i18n="label.yearRange">Rango de años</div>
+              </div>
+              <div class="mini-kpi">
+                <div class="value" data-kpi="modelo.mae">—</div>
+                <div class="label" data-i18n="label.mae">MAE (aprox.)</div>
+              </div>
+              <div class="mini-kpi">
+                <div class="value" data-kpi="modelo.rmse">—</div>
+                <div class="label" data-i18n="label.rmse">RMSE (aprox.)</div>
+              </div>
+              <div class="mini-kpi">
+                <div class="value" data-kpi="tasas.avgRate">—</div>
+                <div class="label" data-i18n="label.avgRate">Tasa promedio</div>
+              </div>
+            </div>
+            <p class="muted" style="margin: 8px 0 0; font-size: 12px" data-summary-error="modelo"></p>
+            <p class="muted" style="margin: 6px 0 0; font-size: 12px" data-summary-error="tasas"></p>
+          </div>
+
+          <div class="side-block">
+            <h3 data-i18n="dash.sidebar.tips">Sugerencias</h3>
+            <p data-i18n="dash.sidebar.tips.body">
+              Usa los filtros del reporte para segmentar por facultad, programa, sede, género y
+              estrato (según aplique).
+            </p>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
