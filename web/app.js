@@ -1,5 +1,7 @@
 /* global document, fetch, localStorage, matchMedia */
 
+console.info("DU app.js v2026-05-21");
+
 const STORAGE_KEYS = {
   theme: "du.theme",
   lang: "du.lang",
