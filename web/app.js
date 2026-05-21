@@ -69,6 +69,136 @@ function findHeaderIndex(headers, candidates) {
   return -1;
 }
 
+function uniqueCount(rows, idx) {
+  if (idx < 0) return null;
+  const seen = new Set();
+  for (const row of rows) {
+    const value = normalize(row[idx]);
+    if (!value) continue;
+    seen.add(value);
+  }
+  return seen.size;
+}
+
+function mostFrequent(rows, idx) {
+  if (idx < 0) return null;
+  const counts = new Map();
+  for (const row of rows) {
+    const value = normalize(row[idx]);
+    if (!value) continue;
+    counts.set(value, (counts.get(value) ?? 0) + 1);
+  }
+  let bestKey = null;
+  let bestCount = -1;
+  for (const [key, count] of counts.entries()) {
+    if (count > bestCount) {
+      bestKey = key;
+      bestCount = count;
+    }
+  }
+  return bestKey;
+}
+
+function formatNumber(value, digits = 2) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return null;
+  return n.toFixed(digits);
+}
+
+function formatInt(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return null;
+  return String(Math.trunc(n));
+}
+
+function summaryDesercionClean(headers, rows) {
+  const facultyIdx = findHeaderIndex(headers, ["nombre_facultad", "nombre facultad"]);
+  const programIdx = findHeaderIndex(headers, ["nombre_programa", "nombre programa"]);
+
+  return {
+    records: formatInt(rows.length),
+    faculties: uniqueCount(rows, facultyIdx),
+    programs: uniqueCount(rows, programIdx),
+    topFaculty: mostFrequent(rows, facultyIdx),
+  };
+}
+
+function summaryTasasClean(headers, rows) {
+  const iesIdx = findHeaderIndex(headers, ["ies"]);
+  const yearIdx = findHeaderIndex(headers, ["año", "aÃ±o", "ano"]);
+  const rateIdx = findHeaderIndex(headers, ["tasa"]);
+
+  let minYear = null;
+  let maxYear = null;
+  let sum = 0;
+  let count = 0;
+
+  for (const row of rows) {
+    const year = yearIdx >= 0 ? toNumber(row[yearIdx]) : null;
+    if (year != null) {
+      minYear = minYear == null ? year : Math.min(minYear, year);
+      maxYear = maxYear == null ? year : Math.max(maxYear, year);
+    }
+
+    const rate = rateIdx >= 0 ? toNumber(row[rateIdx]) : null;
+    if (rate != null) {
+      sum += rate;
+      count += 1;
+    }
+  }
+
+  const yearRange =
+    minYear != null && maxYear != null ? `${Math.trunc(minYear)}–${Math.trunc(maxYear)}` : null;
+  const avgRate = count > 0 ? formatNumber(sum / count, 2) : null;
+
+  return {
+    records: formatInt(rows.length),
+    ies: uniqueCount(rows, iesIdx),
+    yearRange,
+    avgRate,
+  };
+}
+
+function summaryModeloTasas(headers, rows) {
+  const yearIdx = findHeaderIndex(headers, ["año", "aÃ±o", "ano"]);
+  const actualIdx = findHeaderIndex(headers, ["tasa"]);
+  const predIdx = findHeaderIndex(headers, ["tasa_predicha", "tasa predicha"]);
+
+  let minYear = null;
+  let maxYear = null;
+
+  let sumAbs = 0;
+  let sumSq = 0;
+  let count = 0;
+
+  for (const row of rows) {
+    const year = yearIdx >= 0 ? toNumber(row[yearIdx]) : null;
+    if (year != null) {
+      minYear = minYear == null ? year : Math.min(minYear, year);
+      maxYear = maxYear == null ? year : Math.max(maxYear, year);
+    }
+
+    const actual = actualIdx >= 0 ? toNumber(row[actualIdx]) : null;
+    const pred = predIdx >= 0 ? toNumber(row[predIdx]) : null;
+    if (actual == null || pred == null) continue;
+
+    const diff = actual - pred;
+    sumAbs += Math.abs(diff);
+    sumSq += diff * diff;
+    count += 1;
+  }
+
+  const yearRange =
+    minYear != null && maxYear != null ? `${Math.trunc(minYear)}–${Math.trunc(maxYear)}` : null;
+
+  return {
+    records: formatInt(rows.length),
+    yearRange,
+    mae: count > 0 ? formatNumber(sumAbs / count, 2) : null,
+    rmse: count > 0 ? formatNumber(Math.sqrt(sumSq / count), 2) : null,
+  };
+}
+
 // =========================
 // CAMBIO CLAVE AQUÍ
 // =========================
@@ -143,6 +273,7 @@ function injectSummary(scope, summary) {
   if (summary?.records != null) setText(q("records"), summary.records);
   if (summary?.faculties != null) setText(q("faculties"), summary.faculties);
   if (summary?.programs != null) setText(q("programs"), summary.programs);
+  if (summary?.topFaculty != null) setText(q("topFaculty"), summary.topFaculty);
   if (summary?.ies != null) setText(q("ies"), summary.ies);
   if (summary?.yearRange != null) setText(q("yearRange"), summary.yearRange);
   if (summary?.avgRate != null) setText(q("avgRate"), summary.avgRate);
@@ -158,12 +289,17 @@ async function main() {
   for (const node of summaryNodes) {
     const scope = node.getAttribute("data-summary-scope");
     const csv = node.getAttribute("data-csv");
+    const errorTarget = node.getAttribute("data-error-target");
 
     try {
       const summary = await loadCsvSummary(csv);
       injectSummary(scope, summary);
     } catch (err) {
       console.error(err);
+      if (errorTarget) {
+        const el = document.querySelector(errorTarget);
+        if (el) el.textContent = "No se pudo cargar el CSV (ver consola).";
+      }
     }
   }
 }
