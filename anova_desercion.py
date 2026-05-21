@@ -1,4 +1,8 @@
 import pandas as pd
+import matplotlib
+
+matplotlib.use("Agg")
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -63,7 +67,19 @@ plt.ylabel("Tasa")
 
 plt.xticks(rotation=15)
 
-plt.show()
+import os
+
+os.makedirs("web/img", exist_ok=True)
+
+plt.tight_layout()
+
+plt.savefig(
+    "web/img/boxplot_anova.png",
+    dpi=300,
+    bbox_inches="tight"
+)
+
+plt.close()
 
 # ==========================================
 # CREAR GRUPOS PARA ANOVA
@@ -95,7 +111,7 @@ print("p-value:", anova_result.pvalue)
 
 if anova_result.pvalue < 0.05:
 
-    print("\n✅ Se rechaza H0")
+    print("\nSe rechaza H0")
 
     print("Sí existen diferencias significativas entre niveles de formación")
 

@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ANOVA y Tukey</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="site-header">
+
+<div class="container header-inner">
+
+<nav class="top-nav">
+
+<a class="nav-link" href="index.html">Inicio</a>
+
+<a class="nav-link" href="dashboard-1.html">Resumen Ejecutivo</a>
+
+<a class="nav-link" href="dashboard-2.html">Análisis Detallado</a>
+
+<a class="nav-link" href="dashboard-3.html">Análisis Estratégico</a>
+
+<a class="nav-link" href="dashboard-4.html">Modelo Predictivo</a>
+
+<a class="nav-link is-active" href="anova.html">
+ANOVA y Tukey
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<div class="hero-banner">
+
+<div class="hero-content">
+
+<div class="hero-copy">
+
+<h1>
+ANOVA y Análisis Estadístico
+</h1>
+
+<p>
+
+Evaluación estadística de las tasas educativas
+por nivel de formación utilizando ANOVA de un factor
+y prueba post hoc de Tukey.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Objetivo del análisis
+</h2>
+
+<p>
+
+Determinar si existen diferencias estadísticamente
+significativas entre las tasas educativas de los
+niveles de formación Técnico y Tecnológico (TyT)
+y Universitario.
+
+</p>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Estadística descriptiva
+</h2>
+
+<div class="dataset-grid">
+
+<div class="dataset-card">
+
+<h3>TyT</h3>
+
+<p><strong>Media:</strong> 27.16</p>
+
+<p><strong>Mediana:</strong> 21.36</p>
+
+<p><strong>Desv. estándar:</strong> 20.11</p>
+
+</div>
+
+<div class="dataset-card">
+
+<h3>Universitario</h3>
+
+<p><strong>Media:</strong> 21.10</p>
+
+<p><strong>Mediana:</strong> 13.74</p>
+
+<p><strong>Desv. estándar:</strong> 17.86</p>
+
+</div>
+
+</div>
+
+<p>
+
+Los programas TyT presentan una tasa promedio
+superior a la observada en programas universitarios.
+
+</p>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Distribución de tasas por nivel de formación
+</h2>
+
+<img
+src="img/boxplot_anova.png"
+alt="Boxplot"
+style="
+width:100%;
+max-width:1000px;
+border-radius:12px;
+margin-top:20px;
+">
+
+<h3>
+Interpretación
+</h3>
+
+<ul>
+
+<li>
+La mediana observada en TyT es superior a la del nivel Universitario.
+</li>
+
+<li>
+Existen valores atípicos en ambos grupos.
+</li>
+
+<li>
+La dispersión de las tasas es considerable.
+</li>
+
+<li>
+Se observan diferencias en la distribución de ambos niveles.
+</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Hipótesis evaluadas
+</h2>
+
+<div class="dataset-grid">
+
+<div class="dataset-card">
+
+<h3>Hipótesis nula (H₀)</h3>
+
+<p>
+
+No existen diferencias significativas
+entre las medias de las tasas.
+
+</p>
+
+</div>
+
+<div class="dataset-card">
+
+<h3>Hipótesis alternativa (H₁)</h3>
+
+<p>
+
+Sí existen diferencias significativas
+entre las medias de las tasas.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Resultado ANOVA
+</h2>
+
+<div class="dataset-grid">
+
+<div class="dataset-card">
+
+<h3>
+F Statistic
+</h3>
+
+<h1>
+870.649
+</h1>
+
+</div>
+
+<div class="dataset-card">
+
+<h3>
+p-value
+</h3>
+
+<h1>
+5.53 × 10⁻¹⁸⁹
+</h1>
+
+</div>
+
+</div>
+
+<div class="dataset-card">
+
+<h2>
+✅ Decisión estadística
+</h2>
+
+<p>
+
+Se rechaza la hipótesis nula (H₀).
+
+</p>
+
+<p>
+
+Existen diferencias estadísticamente significativas
+entre los niveles de formación evaluados.
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Prueba Post Hoc de Tukey
+</h2>
+
+<table
+style="
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+">
+
+<tr>
+
+<th>Grupo 1</th>
+
+<th>Grupo 2</th>
+
+<th>Diferencia media</th>
+
+<th>p-ajustado</th>
+
+<th>Significativa</th>
+
+</tr>
+
+<tr>
+
+<td>TyT</td>
+
+<td>Universitario</td>
+
+<td>-6.0595</td>
+
+<td>0.000</td>
+
+<td>Sí</td>
+
+</tr>
+
+</table>
+
+<p style="margin-top:20px;">
+
+La prueba de Tukey confirma que la diferencia observada
+entre ambos niveles de formación es estadísticamente significativa.
+
+</p>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Hallazgos clave
+</h2>
+
+<div class="dataset-grid">
+
+<div class="dataset-card">
+
+<h3>
+Hallazgo 1
+</h3>
+
+<p>
+
+TyT presenta tasas promedio superiores
+al nivel Universitario.
+
+</p>
+
+</div>
+
+<div class="dataset-card">
+
+<h3>
+Hallazgo 2
+</h3>
+
+<p>
+
+La diferencia encontrada no es producto del azar.
+
+</p>
+
+</div>
+
+<div class="dataset-card">
+
+<h3>
+Hallazgo 3
+</h3>
+
+<p>
+
+El nivel de formación influye significativamente
+en el comportamiento de las tasas.
+
+</p>
+
+</div>
+
+<div class="dataset-card">
+
+<h3>
+Hallazgo 4
+</h3>
+
+<p>
+
+Los resultados justifican estrategias diferenciadas
+según nivel educativo.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Implicaciones para la toma de decisiones
+</h2>
+
+<ul>
+
+<li>
+Diseñar estrategias diferenciadas para cada nivel de formación.
+</li>
+
+<li>
+Priorizar acciones institucionales en grupos con mayores tasas.
+</li>
+
+<li>
+Realizar seguimiento periódico de indicadores educativos.
+</li>
+
+<li>
+Complementar el análisis con variables académicas y sociodemográficas.
+</li>
+
+</ul>
+
+</section>
+
+
+
+<section class="section">
+
+<h2>
+Conclusión General
+</h2>
+
+<p>
+
+La prueba ANOVA evidenció diferencias
+estadísticamente significativas entre las tasas
+educativas de los niveles TyT y Universitario.
+La prueba post hoc de Tukey confirmó dichas
+diferencias, indicando que el nivel de formación
+es un factor relevante en el comportamiento de las
+tasas analizadas. Estos resultados aportan evidencia
+cuantitativa para apoyar la toma de decisiones
+institucionales y el diseño de estrategias orientadas
+al mejoramiento de los indicadores educativos.
+
+</p>
+
+</section>
+
+</main>
+
+</body>
+
+</html>
+
